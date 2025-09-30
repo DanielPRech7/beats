@@ -1,0 +1,77 @@
+/* beats/static/css/style.css */
+
+/* Definição de Cores e Fontes (como variáveis CSS) */
+:root {
+    --spotify-black: #121212;
+    --spotify-dark-gray: #1a1a1a;
+    --spotify-light-gray: #b3b3b3;
+    --spotify-green: #1DB954;
+    --spotify-font: 'Circular Std', sans-serif; /* Use uma fonte moderna ou a 'Circular' se for web-safe */
+}
+
+body {
+    background-color: var(--spotify-black) !important;
+    font-family: var(--spotify-font);
+}
+
+/* Estilo para a barra de navegação lateral (se você criar uma) */
+.sidebar {
+    background-color: #000;
+    min-height: 100vh;
+}
+
+/* Componentes (Cards, Botões) */
+.card {
+    background-color: var(--spotify-dark-gray);
+    color: white;
+    border-radius: 8px; /* Cantos arredondados */
+    border: none;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    background-color: #282828; /* Um pouco mais claro no hover */
+    transform: scale(1.02);
+}
+
+/* Botões de Ação (Spotify Green) */
+.btn-success, button[type="submit"] {
+    background-color: var(--spotify-green) !important;
+    border-color: var(--spotify-green) !important;
+    color: black !important; /* Texto preto para contraste */
+    font-weight: bold;
+    border-radius: 500px; /* Botões pílula */
+    padding: 10px 20px;
+}
+
+.btn-success:hover {
+    background-color: #1ed760 !important;
+}
+
+/* Links em geral */
+a {
+    color: var(--spotify-light-gray);
+    text-decoration: none;
+}
+a:hover {
+    color: white;
+}
+
+/* Estilo para campos de formulário */
+input[type="text"], textarea, select {
+    background-color: #282828;
+    border: 1px solid #535353;
+    color: white;
+    border-radius: 4px;
+}
+input[type="text"]:focus, textarea:focus, select:focus {
+    background-color: #3e3e3e;
+    border-color: white;
+    box-shadow: none;
+}
+
+/* Sobrescrevendo o formulário simples do Django ({{ form.as_p }}) */
+label {
+    color: var(--spotify-light-gray);
+    font-weight: bold;
+}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Playlist: {{ playlist.nome }}{% endblock %}
+
+{% block content %}
+<div class="row g-0">
+    <div class="col-md-2 sidebar p-4 d-flex flex-column" style="min-height: 100vh;">
+        <h3 class="mb-4 text-white">Beats.app</h3>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center" href="{% url 'playlist_list' %}">
+                    <i class="bi bi-arrow-left-short me-2"></i> Voltar para Playlists
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center" href="{% url 'admin:index' %}">
+                    <i class="bi bi-gear-fill me-2"></i> Admin
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10 p-5 content-area">
+        <div class="header-details mb-5">
+            {% if playlist.capa %}
+                <img src="{{ playlist.capa.url }}" alt="Capa da Playlist" class="rounded-3 me-4" style="width: 200px; height: 200px; object-fit: cover;">
+            {% endif %}
+            
+            <h1 class="display-3 fw-bold text-white mt-3">{{ playlist.nome }}</h1>
+            <p class="text-muted fs-5">{{ playlist.descricao|default:"Sem descrição." }}</p>
+        </div>
+        
+        <hr class="text-secondary">
+
+        <div class="card p-4 mb-5" style="background-color: var(--spotify-dark-gray);">
+            <h2 class="h4 text-white mb-3">Adicionar Música</h2>
+            
+            <form method="post" action="{% url 'adicionar_musica_playlist' pk=playlist.pk %}" class="d-flex align-items-center">
+                {% csrf_token %}
+                
+                <select name="musica_id" required class="form-select me-3" style="width: 300px;">
+                    <option value="">-- Selecione uma Música --</option>
+                    {% for musica in todas_musicas %}
+                        {% if musica not in playlist.musicas.all %}
+                            <option value="{{ musica.pk }}">{{ musica.titulo }} - {{ musica.artista }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="btn btn-success">Adicionar</button>
+            </form>
+        </div>
+
+        <h2 class="h3 text-white mb-4">Músicas da Playlist:</h2>
+
+        {% if playlist.musicas.all %}
+            {% for musica in playlist.musicas.all %}
+                <div class="card p-3 mb-3 musica-item">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <h3 class="h5 text-white">{{ musica.titulo }}</h3>
+                            <p class="text-muted">{{ musica.artista }}</p>
+
+                            {% if musica.youtube_id %}
+                                <a href="https://www.youtube.com/watch?v={{ musica.youtube_id }}" target="_blank" class="text-info small">
+                                    Ver no YouTube
+                                </a>
+                            {% else %}
+                                <p class="text-warning small">ID do YouTube não cadastrado.</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            {% if musica.youtube_id %}
+                                <div class="ratio ratio-16x9">
+                                    <iframe 
+                                        src="https://www.youtube.com/embed/{{ musica.youtube_id }}" 
+                                        allowfullscreen 
+                                        title="{{ musica.titulo }}">
+                                    </iframe>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-secondary mt-3" role="alert">
+                Nenhuma música na playlist. Use o formulário acima para adicionar!
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
