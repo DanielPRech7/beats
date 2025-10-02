@@ -3,13 +3,11 @@ from django.shortcuts import redirect, get_object_or_404
 from django.views import View 
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Playlist, Musica
-
 import logging
 
 logger = logging.getLogger(__name__)
 
 class PlaylistListView(ListView):
-    
     model = Playlist
     template_name = 'playlist/playlist_list.html'
     context_object_name = 'playlists'
@@ -23,13 +21,9 @@ class PlaylistDetailView(DetailView):
     template_name = 'playlist/playlist_detail.html'
     context_object_name = 'playlist'
     
-    # Adicione este método para injetar dados adicionais no template
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        # Injeta TODAS as músicas cadastradas no Admin para o dropdown
         context['todas_musicas'] = Musica.objects.all().order_by('titulo')
-        
         return context
 
 class PlaylistCreateView(CreateView):
@@ -41,13 +35,9 @@ class PlaylistCreateView(CreateView):
 class PlaylistAddMusicaView(View):
     def post(self, request, pk):
         playlist = get_object_or_404(Playlist, pk=pk)
-        
         musica_id = request.POST.get('musica_id')
         
         if musica_id:
             musica = get_object_or_404(Musica, pk=musica_id)
-            
             playlist.musicas.add(musica)
-            
         return redirect('playlist_detail', pk=playlist.pk)
-

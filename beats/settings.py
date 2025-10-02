@@ -129,13 +129,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# beats/settings.py (Adicione este bloco no final do arquivo)
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     
-    # 1. FORMATTERS: Como o log deve ser formatado (data, nível, mensagem, etc.)
     'formatters': {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
@@ -147,38 +144,33 @@ LOGGING = {
         },
     },
     
-    # 2. HANDLERS: Onde o log será enviado (console, arquivo, e-mail, etc.)
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
-            'level': 'INFO', # Logs de INFO e acima vão para o console
+            'level': 'INFO', 
         },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
-            # Defina onde o arquivo de log será salvo
-            # Certifique-se de que o Django tem permissão de escrita neste diretório
             'filename': BASE_DIR / 'logs' / 'beats_debug.log', 
-            'maxBytes': 1024 * 1024 * 5, # 5 MB
-            'backupCount': 5, # Mantém 5 arquivos de backup
+            'maxBytes': 1024 * 1024 * 5, 
+            'backupCount': 5,
             'formatter': 'verbose',
-            'level': 'WARNING', # Logs de WARNING e acima vão para o arquivo
+            'level': 'WARNING', 
         },
     },
     
-    # 3. LOGGERS: Quais componentes você quer registrar e quais handlers usar
     'loggers': {
         'django': {
             'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': True,
         },
-        'beats.playlist': { # Logger para o seu aplicativo 'playlist'
+        'beats.playlist': {
             'handlers': ['console'],
-            'level': 'DEBUG', # Use DEBUG para ver todos os seus próprios logs
+            'level': 'DEBUG',
             'propagate': False,
         },
-        # Logger de segurança do Django (erros de segurança, como CSRF)
         'django.security': {
             'handlers': ['console', 'file'],
             'level': 'ERROR',
