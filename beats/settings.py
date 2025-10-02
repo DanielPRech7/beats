@@ -150,14 +150,6 @@ LOGGING = {
             'formatter': 'simple',
             'level': 'INFO', 
         },
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'logs' / 'beats_debug.log', 
-            'maxBytes': 1024 * 1024 * 5, 
-            'backupCount': 5,
-            'formatter': 'verbose',
-            'level': 'WARNING', 
-        },
     },
     
     'loggers': {
