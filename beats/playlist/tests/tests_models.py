@@ -16,9 +16,9 @@ class MusicaPlaylistModelsTest(TestCase):
             artista='Queen', 
             youtube_id='fJ9rUzIMcZQ'
         )
-        
+
         self.playlist_rock = Playlist.objects.create(nome='Classic Rock Hits')
-        
+
         self.playlist_rock.musicas.add(self.musica_1, self.musica_2)
 
     def test_musica_str_representation(self):
@@ -42,14 +42,14 @@ class MusicaPlaylistModelsTest(TestCase):
     def test_playlist_many_to_many_relationship(self):
         """Testa se a Playlist contém as Músicas corretas."""
         self.assertEqual(self.playlist_rock.musicas.count(), 2)
-        
+
         self.assertIn(self.musica_1, self.playlist_rock.musicas.all())
 
     def test_musica_reverse_relationship(self):
         """Testa se a música sabe a quais Playlists ela pertence."""
         self.assertIn(self.playlist_rock, self.musica_2.playlists.all())
-        
+
         playlist_2 = Playlist.objects.create(nome='Favorites')
         playlist_2.musicas.add(self.musica_2)
-        
+
         self.assertEqual(self.musica_2.playlists.count(), 2)
