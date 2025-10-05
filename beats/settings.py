@@ -56,7 +56,8 @@ EXTRA_APPS = [
 ]
 
 PROJECT_APPS = [
-    'beats.playlist'
+    'beats.playlist',
+    'beats.core',
     ]
 
 INSTALLED_APPS += EXTRA_APPS

@@ -16,6 +16,7 @@ class PlaylistListView(ListView):
         logger.info("Playlist list view foi acessada.")
         return super().get(request, *args, **kwargs)
 
+#aaaa
 class PlaylistDetailView(DetailView):
     model = Playlist
     template_name = 'playlist/playlist_detail.html'
