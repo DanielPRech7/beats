@@ -58,10 +58,16 @@ EXTRA_APPS = [
 PROJECT_APPS = [
     'beats.playlist',
     'beats.core',
+    'beats.accounts',
     ]
 
 INSTALLED_APPS += EXTRA_APPS
 INSTALLED_APPS += PROJECT_APPS
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
